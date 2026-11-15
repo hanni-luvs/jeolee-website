@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NYC Times Square Billboard | JeoLee</title>
+  <script>
+    if (sessionStorage.getItem("jeolee_svvip_unlocked") !== "true") {
+      window.location.href = "contact.html";
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(rgba(14, 14, 20, 0.70), rgba(28, 12, 24, 0.85)), url('../nyc-1.jfif');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    h1, h2, .brand-logo {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .pink-glow {
+      text-shadow: 0 0 22px rgba(255, 64, 129, 0.9);
+    }
+
+    .gold-glow {
+      color: #ffd54f;
+      text-shadow: 0 0 18px rgba(255, 213, 79, 0.75);
+    }
+
+    /* Portrait Video Showcase Frame (Left Column) */
+    .billboard-showcase {
+      background: linear-gradient(145deg, rgba(30, 22, 34, 0.95), rgba(18, 14, 22, 0.98));
+      border: 2px solid rgba(255, 213, 79, 0.65);
+      box-shadow: 0 0 40px rgba(255, 64, 129, 0.35), 0 0 20px rgba(255, 213, 79, 0.2);
+      border-radius: 22px;
+      padding: 18px;
+      height: 100%;
+    }
+
+    .billboard-video-box {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid #ff80ab;
+      background-color: #0d0d12;
+      aspect-ratio: 9 / 16;
+      max-height: 560px;
+      margin: 0 auto;
+    }
+
+    .billboard-video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background-color: #000000;
+    }
+
+    .nyc-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff4081, #ffb300);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 1.2px;
+      padding: 6px 16px;
+      border-radius: 25px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(255, 64, 129, 0.4);
+    }
+
+    /* Stacked Milestone Cards (Right Column) */
+    .nyc-card {
+      background-color: rgba(28, 22, 30, 0.92);
+      border: 1.5px solid rgba(255, 128, 171, 0.4);
+      border-radius: 18px;
+      padding: 20px 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .nyc-card:hover {
+      transform: translateX(6px);
+      border-color: #ffd54f;
+      box-shadow: 0 0 24px rgba(255, 64, 129, 0.45);
+    }
+
+    .nyc-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .dropdown-content {
+      z-index: 9999 !important;
+    }
+
+    /* EXACT FOOTER CSS FROM about.html */
+    .jeolee-footer {
+      background: linear-gradient(90deg, #e0437c 0%, #b32864 55%, #7c1d4c 100%);
+      color: #ffffff;
+      padding-top: 48px;
+      margin-top: 40px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: 1.5px;
+      margin: 0 0 4px;
+      color: #ffffff;
+    }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #ffe4ee;
+      margin: 0 0 14px;
+      line-height: 1.15;
+    }
+
+    .footer-desc {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #fce4ec;
+      max-width: 310px;
+      margin: 0 0 20px;
+    }
+
+    .footer-code-btn {
+      background-color: #f06292 !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.8px;
+      border-radius: 25px !important;
+      padding: 0 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .footer-code-btn:hover {
+      background-color: #ec407a !important;
+      transform: translateY(-2px);
+    }
+
+    .footer-heading {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #ffc1d6;
+      margin: 4px 0 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 9px;
+    }
+
+    .footer-links a {
+      color: #ffffff;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: color 0.2s ease, padding-left 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ffd6e7;
+      padding-left: 4px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .social-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .social-circle:hover {
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .footer-bottom {
+      background: rgba(0, 0, 0, 0.18);
+      padding: 14px 15px;
+      margin-top: 38px;
+      font-size: 0.8rem;
+      color: #f8bbd0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. DROPDOWN MENUS -->
+  <ul id="story-dropdown" class="dropdown-content grey darken-4">
+    <li><a href="about.html" class="pink-text text-accent-2">About JeoLee</a></li>
+    <li><a href="childhood.html" class="pink-text text-accent-2">Childhood Pics</a></li>
+    <li><a href="background.html" class="pink-text text-accent-2">Background &amp; Meeting</a></li>
+    <li><a href="business.html" class="pink-text text-accent-2">Business &amp; Net Worth</a></li>
+  </ul>
+
+  <ul id="moments-dropdown" class="dropdown-content grey darken-4">
+    <li><a href="pbb-moments.html" class="pink-text text-accent-2">PBB Moments</a></li>
+    <li><a href="red-string.html" class="pink-text text-accent-2">Red String Theory</a></li>
+    <li><a href="chemistry.html" class="pink-text text-accent-2">15M Views &amp; Chemistry</a></li>
+    <li><a href="nyc-billboard.html" class="pink-text text-accent-2">NYC Billboard &amp; Impact</a></li>
+  </ul>
+
+  <!-- MAIN NAVIGATION BAR (Full Width With Padding) -->
+<nav class="pink accent-2 z-depth-3">
+    <div class="nav-wrapper" style="padding: 0 30px;">
+        <a href="hannilee.html" class="brand-logo left">JEOLEE 🎀</a>
+        <ul class="right">
+            <li>
+                <a href="hannilee.html"><i class="material-icons left">home</i>Home</a>
+            </li>
+            <li>
+                <a class="dropdown-trigger" href="#!" data-target="story-dropdown">
+                    <i class="material-icons left">people</i>Their Story<i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-trigger" href="#!" data-target="moments-dropdown">
+                    <i class="material-icons left">event_note</i>Milestones<i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+            <li>
+                <a href="contact.html"><i class="material-icons left">email</i>Contact</a>
+            </li>
+            <li>
+                <a class="modal-trigger btn pink darken-2 waves-effect waves-light" href="#signin-modal" style="border-radius: 25px; margin-left: 10px;">SVVIP Sign In</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+  <!-- NYC BILLBOARD MAIN CONTENT (PORTRAIT VIDEO + RIGHT MILESTONE STACK) -->
+  <div class="container" style="margin-top: 45px; flex: 1;">
+    <div class="center-align" style="margin-bottom: 35px;">
+      <span class="nyc-badge">🗽 TIMES SQUARE • NEW YORK CITY</span>
+      <h2 class="pink-text text-accent-2 pink-glow" style="font-weight: 800; margin-top: 6px; margin-bottom: 10px;">
+        Lighting Up NYC Times Square ✨
+      </h2>
+      <p style="color: #e0e0e0; font-size: 1.05rem; max-width: 700px; margin: 0 auto;">
+        From viral moments in the Philippines to the brightest screens in New York City—a landmark fan tribute celebrating Jeo &amp; Gehlee.
+      </p>
+    </div>
+
+    <div class="row" style="display: flex; flex-wrap: wrap; align-items: stretch;">
+      <!-- LEFT COLUMN (m5): PORTRAIT BILLBOARD VIDEO -->
+      <div class="col s12 m5" style="margin-bottom: 24px;">
+        <div class="billboard-showcase">
+          <div class="billboard-video-box">
+            <!-- Replace '../nyc-billboard.mp4' with your actual portrait video filename -->
+            <video controls autoplay muted loop playsinline>
+              <source src="../billboardjeolee.mp4 " type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p class="center-align gold-glow" style="font-weight: 600; font-size: 0.9rem; margin: 14px 0 0;">
+            ✨ Live LED Tribute in Manhattan, NYC
+          </p>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN (m7): 3 STACKED MILESTONE CARDS + QUOTE -->
+      <div class="col s12 m7" style="margin-bottom: 24px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="nyc-card" style="border-left: 4px solid #ffd54f;">
+          <h5 class="gold-glow" style="font-weight: 700; font-size: 1.15rem; margin-top: 0; margin-bottom: 8px;">
+            "Every Little Moment, Shining on the World's Biggest Stage"
+          </h5>
+          <p style="color: #e0e0e0; font-size: 0.92rem; line-height: 1.6; margin: 0;">
+            Powered by unwavering love from global supporters, JeoLee's Times Square feature stands as proof of how deeply their chemistry resonates with fans everywhere.
+          </p>
+        </div>
+
+        <div class="nyc-card">
+          <h6 class="pink-text text-accent-2" style="font-weight: 700; font-size: 1.05rem; margin-top: 0;">
+            💖 Global Fan Unity
+          </h6>
+          <p style="color: #d8d8d8; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+            Supporters from the Philippines and around the world teamed up to turn a dream fan project into a real-life Times Square spotlight.
+          </p>
+        </div>
+
+        <div class="nyc-card">
+          <h6 class="gold-glow" style="font-weight: 700; font-size: 1.05rem; margin-top: 0;">
+            🗽 Iconic NYC Screen
+          </h6>
+          <p style="color: #d8d8d8; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+            Displayed right in the heart of Manhattan, capturing passersby and giving international fans an unforgettable real-world meetup spot.
+          </p>
+        </div>
+
+        <div class="nyc-card">
+          <h6 class="pink-text text-accent-2" style="font-weight: 700; font-size: 1.05rem; margin-top: 0;">
+            🌟 Unstoppable Momentum
+          </h6>
+          <p style="color: #d8d8d8; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+            Alongside 15.9M+ streaming views and sold-out fan support, the NYC billboard marked a major milestone in their rising journey together.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIFORM 10-PAGE FOOTER -->
+  <footer class="jeolee-footer">
+    <div class="container">
+      <div class="row" style="margin-bottom: 0;">
+
+        <!-- Column 1: Brand, Tagline, & Request Button -->
+        <div class="col s12 m5">
+          <h5 class="footer-brand">JEOLEE 🎀</h5>
+          <p class="footer-tagline">Every little moment, kept forever.</p>
+          <p class="footer-desc">
+            Message us to request a physical SVVIP card or guest referral code.
+          </p>
+          <a href="contact.html" class="btn footer-code-btn">REQUEST A CODE</a>
+        </div>
+
+        <!-- Column 2: Explore Links -->
+        <div class="col s6 m4">
+          <h6 class="footer-heading">EXPLORE</h6>
+          <ul class="footer-links">
+            <li><a href="hannilee.html">Home</a></li>
+            <li><a href="about.html">About Jeolee</a></li>
+            <li><a href="childhood.html">Childhood Pics</a></li>
+            <li><a href="background.html">Background &amp; Meeting</a></li>
+            <li><a href="business.html">Business &amp; Net Worth</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Milestones Links & Social Icons -->
+        <div class="col s6 m3">
+          <h6 class="footer-heading">MILESTONES</h6>
+          <ul class="footer-links">
+            <li><a href="pbb-moments.html">PBB Moments</a></li>
+            <li><a href="red-string.html">Red String Theory</a></li>
+            <li><a href="chemistry.html">15M Views</a></li>
+            <li><a href="nyc-billboard.html">NYC Billboard</a></li>
+          </ul>
+
+          <!-- 3 Full-Color Circular Social Buttons (Facebook, Instagram, X) -->
+          <div class="footer-socials">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/hannaligalangeraledesma" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Facebook">
+              <svg width="36" height="36" viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="24" fill="#3b5998"/>
+                <path d="M29.4 25.5l.8-5.2h-5v-3.4c0-1.4.7-2.8 2.9-2.8h2.3V9.7s-2.1-.4-4-.4c-4.1 0-6.8 2.5-6.8 7v4H15v5.2h4.6V38h5.6V25.5h4.2z" fill="#ffffff"/>
+              </svg>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/han.xchui" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Instagram">
+              <svg width="36" height="36" viewBox="0 0 48 48">
+                <defs>
+                  <radialGradient id="igGrad" cx="30%" cy="107%" r="150%">
+                    <stop offset="0%" stop-color="#fdf497"/>
+                    <stop offset="5%" stop-color="#fdf497"/>
+                    <stop offset="45%" stop-color="#fd5949"/>
+                    <stop offset="60%" stop-color="#d6249f"/>
+                    <stop offset="90%" stop-color="#285AEB"/>
+                  </radialGradient>
+                </defs>
+                <circle cx="24" cy="24" r="24" fill="url(#igGrad)"/>
+                <rect x="13" y="13" width="22" height="22" rx="6" fill="none" stroke="#ffffff" stroke-width="2.6"/>
+                <circle cx="24" cy="24" r="5.2" fill="none" stroke="#ffffff" stroke-width="2.6"/>
+                <circle cx="30.5" cy="17.5" r="1.5" fill="#ffffff"/>
+              </svg>
+            </a>
+
+            <!-- X -->
+            <a href="https://www.x.com/hanniiixchui" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="X">
+              <svg width="36" height="36" viewBox="0 0 48 48">
+                <circle cx="24" cy="24" r="24" fill="#000000"/>
+                <path d="M26.5 22.1L35.2 12h-2.1l-7.5 8.8L19.6 12h-7l9.1 13.3L12.6 36h2.1l8-9.3 6.3 9.3h7l-9.5-13.9zm-2.8 3.3l-.9-1.3-7.4-10.5h3.2l5.9 8.5.9 1.3 7.7 11h-3.2l-6.2-9z" fill="#ffffff"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Bottom Copyright Strip -->
+    <div class="footer-bottom">
+      <div class="container center-align">
+        Made with <span style="color: #ffccd5;">❤</span> by hanni, for fans &bull; Unofficial fan page, not affiliated with the artists or their management &bull; &copy; 2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- MATERIALIZE JAVASCRIPT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Active Modals
+            var modalElems = document.querySelectorAll('.modal');
+            M.Modal.init(modalElems);
+            // 2. Activate Navigation Dropdowns
+            var dropdownElems = document.querySelectorAll('.dropdown-trigger');
+            M.Dropdown.init(dropdownElems, { coverTrigger: false });
+        });
+        // 3. Code Checker 
+        function checkCode() {
+            var code = document.getElementById('referral_code').value;
+            var validCodes = ["101508", "143200", "520131", "122111", "110121"];
+            if (validCodes.includes(code)) {
+                alert("Welcome SVVIP! Access Granted 💗");
+            } else {
+                alert("Invalid code! Ask the owner for a referral.");
+            }
+        }
+    </script>
+</body>
+</html>

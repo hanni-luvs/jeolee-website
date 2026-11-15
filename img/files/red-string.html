@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red String Theory | JeoLee</title>
+  <script>
+    if (sessionStorage.getItem("jeolee_svvip_unlocked") !== "true") {
+      window.location.href = "contact.html";
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(135deg, #161024 0%, #3b0822 50%, #1a0612 100%);
+      background-attachment: fixed;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    h1, h2, .brand-logo {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .red-string-title {
+      background: linear-gradient(90deg, #ff80ab 0%, #ffffff 50%, #ff1744 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(255, 23, 68, 0.75));
+    }
+
+    /* Glowing Red Thread Divider */
+    .red-thread-line {
+      height: 3px;
+      width: 100%;
+      max-width: 520px;
+      margin: 18px auto 42px;
+      background: linear-gradient(90deg, transparent, #ff1744, #ff80ab, #ff1744, transparent);
+      box-shadow: 0 0 16px rgba(255, 23, 68, 0.9);
+      border-radius: 50%;
+    }
+
+    /* ZIG-ZAG INTERACTIVE ROW */
+    .zigzag-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 48px;
+      position: relative;
+    }
+
+    /* Picture Frame (Clickable Trigger) */
+    .string-pic-box {
+      position: relative;
+      z-index: 2;
+      width: 270px;
+      flex-shrink: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2.5px solid #ff4081;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 22px rgba(255, 23, 68, 0.45);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      background-color: #1c1018;
+    }
+
+    .string-pic-box:hover {
+      transform: scale(1.03);
+      border-color: #ff80ab;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.75), 0 0 32px rgba(255, 23, 68, 0.8);
+    }
+
+    .string-pic-box img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      display: block;
+    }
+
+    .click-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20, 8, 16, 0.85);
+      border: 1px solid #ff80ab;
+      color: #ffd6e7;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Sliding Info Box */
+    .string-info-box {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      max-width: 540px;
+      background: linear-gradient(145deg, rgba(34, 16, 28, 0.95), rgba(20, 12, 20, 0.97));
+      border: 1.5px solid rgba(255, 23, 68, 0.5);
+      border-radius: 20px;
+      padding: 26px 28px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 20px rgba(255, 23, 68, 0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+    }
+
+    /* Slide LEFT from right-side picture */
+    .slide-from-right {
+      transform: translateX(90px);
+      border-right: 5px solid #ff1744;
+    }
+
+    /* Slide RIGHT from left-side picture */
+    .slide-from-left {
+      transform: translateX(-90px);
+      border-left: 5px solid #ff1744;
+    }
+
+    /* Active Revealed State */
+    .zigzag-row.revealed .string-info-box {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .clue-badge {
+      display: inline-block;
+      background: rgba(255, 23, 68, 0.22);
+      border: 1px solid rgba(255, 128, 171, 0.45);
+      color: #ff80ab;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    /* PRESERVED "WHAT IS THE RED STRING OF FATE?" CARD */
+    .fate-legend-card {
+      background: rgba(28, 16, 24, 0.95);
+      border: 1.5px solid rgba(255, 64, 129, 0.45);
+      border-left: 6px solid #ff4081;
+      border-radius: 18px;
+      padding: 26px 30px;
+      margin-top: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 24px rgba(255, 64, 129, 0.2);
+    }
+
+    /* Mobile Responsive Stack */
+    @media (max-width: 768px) {
+      .zigzag-row {
+        flex-direction: column !important;
+        gap: 18px;
+      }
+      .string-pic-box {
+        width: 240px;
+      }
+      .slide-from-right,
+      .slide-from-left {
+        transform: translateY(-25px);
+      }
+      .zigzag-row.revealed .string-info-box {
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-content {
+      z-index: 9999 !important;
+    }
+
+    /* UNIFORM JEOLEE FOOTER STYLES */
+    .jeolee-footer {
+      background: linear-gradient(90deg, #e0437c 0%, #b32864 55%, #7c1d4c 100%);
+      color: #ffffff;
+      padding-top: 48px;
+      margin-top: 60px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .footer-brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: 1.5px;
+      margin: 0 0 4px;
+      color: #ffffff;
+    }
+
+    .footer-tagline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: #ffe4ee;
+      margin: 0 0 14px;
+      line-height: 1.15;
+    }
+
+    .footer-desc {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: #fce4ec;
+      max-width: 310px;
+      margin: 0 0 20px;
+    }
+
+    .footer-code-btn {
+      background-color: #f06292 !important;
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.8px;
+      border-radius: 25px !important;
+      padding: 0 24px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .footer-code-btn:hover {
+      background-color: #ec407a !important;
+      transform: translateY(-2px);
+    }
+
+    .footer-heading {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #ffc1d6;
+      margin: 4px 0 14px;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 9px;
+    }
+
+    .footer-links a {
+      color: #ffffff;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: color 0.2s ease, padding-left 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #ffd6e7;
+      padding-left: 4px;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .social-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      text-decoration: none;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .social-circle:hover {
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .footer-bottom {
+      background: rgba(0, 0, 0, 0.18);
+      padding: 14px 15px;
+      margin-top: 38px;
+      font-size: 0.8rem;
+      color: #f8bbd0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DROPDOWN MENUS -->
+  <ul id="story-dropdown" class="dropdown-content grey darken-4">
+    <li><a href="about.html" class="pink-text text-accent-2">About JeoLee</a></li>
+    <li><a href="childhood.html" class="pink-text text-accent-2">Childhood Pics</a></li>
+    <li><a href="background.html" class="pink-text text-accent-2">Background &amp; Meeting</a></li>
+    <li><a href="business.html" class="pink-text text-accent-2">Business &amp; Net Worth</a></li>
+  </ul>
+
+  <ul id="moments-dropdown" class="dropdown-content grey darken-4">
+    <li><a href="pbb-moments.html" class="pink-text text-accent-2">PBB Moments</a></li>
+    <li><a href="red-string.html" class="pink-text text-accent-2">Red String Theory</a></li>
+    <li><a href="chemistry.html" class="pink-text text-accent-2">15M Views &amp; Chemistry</a></li>
+    <li><a href="nyc-billboard.html" class="pink-text text-accent-2">NYC Billboard &amp; Impact</a></li>
+  </ul>
+
+  <!-- MAIN NAVIGATION BAR (Full Width With Padding) -->
+<nav class="pink accent-2 z-depth-3">
+    <div class="nav-wrapper" style="padding: 0 30px;">
+        <a href="hannilee.html" class="brand-logo left">JEOLEE 🎀</a>
+        <ul class="right">
+            <li>
+                <a href="hannilee.html"><i class="material-icons left">home</i>Home</a>
+            </li>
+            <li>
+                <a class="dropdown-trigger" href="#!" data-target="story-dropdown">
+                    <i class="material-icons left">people</i>Their Story<i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-trigger" href="#!" data-target="moments-dropdown">
+                    <i class="material-icons left">event_note</i>Milestones<i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+            <li>
+                <a href="contact.html"><i class="material-icons left">email</i>Contact</a>
+            </li>
+            <li>
+                <a class="modal-trigger btn pink darken-2 waves-effect waves-light" href="#signin-modal" style="border-radius: 25px; margin-left: 10px;">SVVIP Sign In</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+  <!-- RED STRING THEORY MAIN CONTENT -->
+  <div class="container" style="margin-top: 48px; flex: 1;">
+    <div class="center-align">
+        <h2 style="font-weight: 800; margin-bottom: 10px;">
+        <span class="red-string-title">The Red String Theory</span> 🎀💗🎀
+      </h2>
+      <p style="color: #f3d6e2; font-size: 1.05rem; max-width: 700px; margin: 0 auto;">
+        Click each photo to pull the red thread and reveal the hidden destiny clues connecting Jeo &amp; Gehlee.
+      </p>
+      <div class="red-thread-line"></div>
+    </div>
+
+    <!-- ROW 1: HANBOK OUTFITS (INFO ON LEFT, PICTURE ON RIGHT) -->
+    <div class="zigzag-row" id="row-1">
+      <div class="string-info-box slide-from-right">
+        <span class="clue-badge">🧵 Clue #01 • Royal Parallels</span>
+        <h5 class="pink-text text-accent-2" style="font-weight: 700; margin-top: 0;">
+          Traditional Hanbok &amp; Regal Aura
+        </h5>
+        <p style="color: #e2d5dc; font-size: 0.94rem; line-height: 1.65; margin: 0;">
+          Jeo dressed in a striking crimson and gold floral Hanbok with a traditional <em>gat</em> hat, paired with Gehlee in a soft pastel pink and lavender silk Hanbok by the palace pavilion—two separate moments carrying the exact same timeless grace.
+        </p>
+      </div>
+
+      <div class="string-pic-box" onclick="toggleClue('row-1', this)">
+        <img src="../redstring-1.jfif" alt="Traditional Hanbok Clue">
+        <span class="click-hint">✨ Click photo to reveal clue</span>
+      </div>
+    </div>
+
+    <!-- ROW 2: PUFFER JACKETS (PICTURE ON LEFT, INFO ON RIGHT) -->
+    <div class="zigzag-row" id="row-2">
+      <div class="string-pic-box" onclick="toggleClue('row-2', this)">
+        <img src="../redstring-2.jfif" alt="Winter Puffer Jackets Clue">
+        <span class="click-hint">✨ Click photo to reveal clue</span>
+      </div>
+
+      <div class="string-info-box slide-from-left">
+        <span class="clue-badge">✨ Clue #02 • Synced Aesthetics</span>
+        <h5 class="pink-text text-accent-2" style="font-weight: 700; margin-top: 0;">
+          Cozy Puffer Jackets &amp; Effortless Cool
+        </h5>
+        <p style="color: #e2d5dc; font-size: 0.94rem; line-height: 1.65; margin: 0;">
+          Jeo in a sleek black puffer jacket, cap, and sunglasses alongside Gehlee bundled up in a blush-pink puffer coat and white knit beanie in the snow—matching silhouettes and off-camera style long before meeting.
+        </p>
+      </div>
+    </div>
+
+    <!-- ROW 3: RED #1 JERSEYS (INFO ON LEFT, PICTURE ON RIGHT) -->
+    <div class="zigzag-row" id="row-3">
+      <div class="string-info-box slide-from-right">
+        <span class="clue-badge">💞 Clue #03 • Number One</span>
+        <h5 class="pink-text text-accent-2" style="font-weight: 700; margin-top: 0;">
+          Matching Crimson Jerseys &amp; Jersey #01
+        </h5>
+        <p style="color: #e2d5dc; font-size: 0.94rem; line-height: 1.65; margin: 0;">
+          Gehlee posing in an oversized red <strong>"01"</strong> jersey and Jeo stepping onto the court in his crimson and black <strong>"ONG 1"</strong> basketball uniform—wearing the exact same color and number felt like destiny quietly aligning their paths.
+        </p>
+      </div>
+
+      <div class="string-pic-box" onclick="toggleClue('row-3', this)">
+        <img src="../redstring-3.jfif" alt="Red Number 1 Jerseys Clue">
+        <span class="click-hint">✨ Click photo to reveal clue</span>
+      </div>
+    </div>
+
+    <!-- ROW 4: TWIN PIGTAILS & EYE SMILES (PICTURE ON LEFT, INFO ON RIGHT) -->
+    <div class="zigzag-row" id="row-4">
+      <div class="string-pic-box" onclick="toggleClue('row-4', this)">
+        <img src="../redstring-4.jfif" alt="Twin Pigtails and Eye Smiles Clue">
+        <span class="click-hint">✨ Click photo to reveal clue</span>
+      </div>
+
+      <div class="string-info-box slide-from-left">
+        <span class="clue-badge">🌟 Clue #04 • Mirrored Joy</span>
+        <h5 class="pink-text text-accent-2" style="font-weight: 700; margin-top: 0;">
+          Twin Pigtails &amp; Synced Eye Smiles
+        </h5>
+        <p style="color: #e2d5dc; font-size: 0.94rem; line-height: 1.65; margin: 0;">
+          Even down to playful high twin pigtails and bright, scrunched-up eye smiles, Jeo and Gehlee share the exact same contagious warmth—looking like two halves of one joyful soul.
+        </p>
+      </div>
+    </div>
+
+    <!-- PRESERVED "WHAT IS THE RED STRING OF FATE?" LEGEND CARD -->
+    <div class="fate-legend-card">
+      <h5 class="pink-text text-accent-2" style="font-weight: 700; margin-top: 0; margin-bottom: 10px; font-size: 1.25rem;">
+        🧵 What is the Red String of Fate?
+      </h5>
+      <p style="color: #f0e4ea; font-size: 0.96rem; line-height: 1.65; margin: 0;">
+        According to legend, an invisible red thread connects those who are destined to meet—regardless of time, place, or circumstance. For Jeolee, every coincidence led them straight to the same moment.
+      </p>
+    </div>
+  </div>
+
+  <!-- UNIFORM 10-PAGE FOOTER -->
+<footer class="jeolee-footer">
+  <div class="container">
+    <div class="row" style="margin-bottom: 0;">
+
+      <!-- Column 1: Brand, Tagline, & Request Button -->
+      <div class="col s12 m5">
+        <h5 class="footer-brand">JEOLEE 🎀</h5>
+        <p class="footer-tagline">Every little moment, kept forever.</p>
+        <p class="footer-desc">
+          Message us to request a physical SVVIP card or guest referral code.
+        </p>
+        <a href="contact.html" class="btn footer-code-btn">REQUEST A CODE</a>
+      </div>
+
+      <!-- Column 2: Explore Links -->
+      <div class="col s6 m4">
+        <h6 class="footer-heading">EXPLORE</h6>
+        <ul class="footer-links">
+          <li><a href="hannilee.html">Home</a></li>
+          <li><a href="about.html">About Jeolee</a></li>
+          <li><a href="childhood.html">Childhood Pics</a></li>
+          <li><a href="background.html">Background &amp; Meeting</a></li>
+          <li><a href="business.html">Business &amp; Net Worth</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Milestones Links & Social Icons -->
+      <div class="col s6 m3">
+        <h6 class="footer-heading">MILESTONES</h6>
+        <ul class="footer-links">
+          <li><a href="pbb-moments.html">PBB Moments</a></li>
+          <li><a href="red-string.html">Red String Theory</a></li>
+          <li><a href="chemistry.html">15M Views</a></li>
+          <li><a href="nyc-billboard.html">NYC Billboard</a></li>
+        </ul>
+
+<div class="footer-socials">
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/hannaligalangeraledesma" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Facebook">
+    <svg width="36" height="36" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="24" fill="#3b5998"/>
+      <path d="M29.4 25.5l.8-5.2h-5v-3.4c0-1.4.7-2.8 2.9-2.8h2.3V9.7s-2.1-.4-4-.4c-4.1 0-6.8 2.5-6.8 7v4H15v5.2h4.6V38h5.6V25.5h4.2z" fill="#ffffff"/>
+    </svg>
+  </a>
+
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/han.xchui" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Instagram">
+    <svg width="36" height="36" viewBox="0 0 48 48">
+      <defs>
+        <radialGradient id="igGrad" cx="30%" cy="107%" r="150%">
+          <stop offset="0%" stop-color="#fdf497"/>
+          <stop offset="5%" stop-color="#fdf497"/>
+          <stop offset="45%" stop-color="#fd5949"/>
+          <stop offset="60%" stop-color="#d6249f"/>
+          <stop offset="90%" stop-color="#285AEB"/>
+        </radialGradient>
+      </defs>
+      <circle cx="24" cy="24" r="24" fill="url(#igGrad)"/>
+      <rect x="13" y="13" width="22" height="22" rx="6" fill="none" stroke="#ffffff" stroke-width="2.6"/>
+      <circle cx="24" cy="24" r="5.2" fill="none" stroke="#ffffff" stroke-width="2.6"/>
+      <circle cx="30.5" cy="17.5" r="1.5" fill="#ffffff"/>
+    </svg>
+  </a>
+
+  <!-- X -->
+  <a href="https://www.x.com/hanniiixchui" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="X">
+    <svg width="36" height="36" viewBox="0 0 48 48">
+      <circle cx="24" cy="24" r="24" fill="#000000"/>
+      <path d="M26.5 22.1L35.2 12h-2.1l-7.5 8.8L19.6 12h-7l9.1 13.3L12.6 36h2.1l8-9.3 6.3 9.3h7l-9.5-13.9zm-2.8 3.3l-.9-1.3-7.4-10.5h3.2l5.9 8.5.9 1.3 7.7 11h-3.2l-6.2-9z" fill="#ffffff"/>
+    </svg>
+  </a>
+</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Copyright Strip -->
+  <div class="footer-bottom">
+    <div class="container center-align">
+      Made with <span style="color: #ffccd5;">❤</span> by hanni, for fans &bull; Unofficial fan page, not affiliated with the artists or their management &bull; &copy; 2026
+    </div>
+  </div>
+</footer>
+
+  <!-- MATERIALIZE JAVASCRIPT & CLICK SLIDE SCRIPT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var dropdownElems = document.querySelectorAll('.dropdown-trigger');
+      M.Dropdown.init(dropdownElems, { coverTrigger: false });
+    });
+
+    function toggleClue(rowId, picElement) {
+      var row = document.getElementById(rowId);
+      var hint = picElement.querySelector('.click-hint');
+      row.classList.toggle('revealed');
+
+      if (row.classList.contains('revealed')) {
+        hint.textContent = '💗 Click again to hide';
+      } else {
+        hint.textContent = '✨ Click photo to reveal clue';
+      }
+    }
+  </script>
+</body>
+</html>
