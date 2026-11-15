@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JeoLee Fan Page</title>
+
+    <!-- 1. MATERIALIZE CSS & ICONS (Required by your lesson) -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link href="https://googleapis.com" rel="stylesheet">
+
+    <!-- 2. YOUR SIMPLE CUSTOM STYLES -->
+    <style>
+        body {
+            background-color: #121212; /* Sleek black background */
+            color: white;
+        }
+        .pink-glow {
+            text-shadow: 0 0 15px #ff4081; /* Glowing pink effect */
+        }
+        .card {
+            background-color: #1e1e1e; /* Dark card to match black theme */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION BAR (Uses Materialize 'nav-wrapper') -->
+    <nav class="pink accent-2">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo">JEOLEE 🎀</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About Them</a></li>
+                <!-- Opens the Sign-In Modal -->
+                <li><a class="modal-trigger" href="#signin-modal">SVVIP Sign In</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Front Page) -->
+    <div class="container center-align" id="home" style="margin-top: 50px;">
+        <h1 class="pink-text text-accent-2 pink-glow">Jeo & Gehlee</h1>
+        <p class="flow-text">The Red String Theory • PBB Moments • 15M+ Views</p>
+        
+        <!-- Front Page Picture Card -->
+        <div class="row">
+            <div class="col s12 m8 offset-m2">
+                <div class="card">
+                    <div class="card-image">
+                        <!-- Replace this with your actual image path -->
+                        <img src="img/background 4.webp" alt="Jeo and Gehlee">
+                        <span class="card-title">My Favorite Ship</span>
+                    </div>
+                    <div class="card-content">
+                        <p>From PBB moments to the NYC Billboard. Welcome to our official archive.</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="#about" class="btn pink accent-2 waves-effect waves-light">View My Baby 💗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION (12-Column Grid System) -->
+    <div class="container" id="about" style="margin-top: 60px;">
+        <h3 class="center-align pink-text text-accent-2">About JeoLee</h3>
+        
+        <!-- Row 1: Two columns side-by-side on laptop (m6 + m6 = 12) -->
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card-panel grey darken-4">
+                    <h5 class="pink-text text-accent-2">🧵 Red String Theory</h5>
+                    <p>Write about their matching South Korea aesthetics, same jersey numbers, and where they first met.</p>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <div class="card-panel grey darken-4">
+                    <h5 class="pink-text text-accent-2">🎬 15M+ Views & NYC</h5>
+                    <p>Write about their viral vertical drama, chemistry tests, and seeing them on the NYC billboard.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGN-IN POPUP MODAL (Materialize built-in modal) -->
+    <div id="signin-modal" class="modal grey darken-4 white-text">
+        <div class="modal-content">
+            <h4 class="pink-text text-accent-2">For SVVIP Only 🎀</h4>
+            <p>Please scan your card or enter your 6-digit guest referral code.</p>
+            
+            <!-- Materialize Input Fields -->
+            <div class="input-field">
+                <input id="guest_name" type="text" class="white-text">
+                <label for="guest_name">Your Name</label>
+            </div>
+            <div class="input-field">
+                <input id="referral_code" type="password" maxlength="6" class="white-text">
+                <label for="referral_code">6-Digit Referral Code</label>
+            </div>
+        </div>
+        <div class="modal-footer grey darken-4">
+            <a href="#!" onclick="checkCode()" class="btn pink accent-2">Unlock Vault</a>
+        </div>
+    </div>
+
+    <!-- FOOTER (Bottom Apps & Contact) -->
+    <footer class="page-footer pink accent-2" style="margin-top: 80px;">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6">
+                    <h5 class="white-text">Contact Us</h5>
+                    <p class="grey-text text-lighten-4">Message us to request a physical SVVIP card or guest referral code.</p>
+                </div>
+                <div class="col s12 m4 offset-m2">
+                    <h5 class="white-text">Socials</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Instagram</a></li>
+                        <li><a class="white-text" href="#!">Facebook</a></li>
+                        <li><a class="white-text" href="#!">X (Twitter)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 3. MATERIALIZE JAVASCRIPT (Required to make Modals & Animations work) -->
+    <script src="https://cloudflare.com"></script>
+    <script>
+        // This official Materialize code activates all pop-up Modals on the page
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            M.Modal.init(elems);
+        });
+
+        // Simple code checker you can explain to your professor
+        function checkCode() {
+            var code = document.getElementById('referral_code').value;
+            if (code === "101505" || code === "143200") {
+                alert("Welcome SVVIP! Access Granted 💗");
+            } else {
+                alert("Invalid code! Ask the owner for a referral.");
+            }
+        }
+    </script>
+</body>
+</html>
